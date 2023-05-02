@@ -1,0 +1,294 @@
+openapi: 3.0.3
+info:
+  title: Swagger Flow Magic - OpenAPI 3.0
+  description: |-
+    This API documentation is for Flow Magic Application
+    Objectives:
+      1. Design an API that allows  users to login and see all of user's registered applications.
+      2. Design an API that allows users to obtain screen flow and change screen flow for the regetered applications.
+  contact:
+    email: dherek@oregonstate.edu
+  version: 1.0.0
+servers:
+  - url: https://www.localserver:8000/flowMagic/
+tags:
+  - name: user
+    description: Operations about user
+  - name: applications
+    description: Applications registered by the user
+  - name: screenFlow
+    description: Application's screen flow
+paths:
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Enable user to login to the web portal
+      description: Login to the web portal with the credentials
+      operationId: createUser
+      requestBody:
+        description: User login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Login Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+        '500':
+          description: Operation Failed. Please try after some time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+          
+  /user/logout:
+    post:
+      tags:
+        - user
+      summary: Log out current logged in user session
+      description: Logout the current session
+      operationId: logoutUser
+      responses:
+        '200':
+          description: User logged out successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':
+          description: Invalid bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+        '500':
+          description: Operation Failed. Please try after some time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+      security:
+          - bearerAuth: []
+  /applications:
+    get:
+      tags:
+        - applications
+      summary: List all the applications of the user
+      description: Returns a list of applications
+      operationId: List out all the applications of the login user
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Applications'    
+        '400':
+          description: Invalid application Id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse' 
+        '401':  
+          description: Invalid bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+        '500':
+          description: Operation Failed. Please try after some time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+      security:
+          - bearerAuth: []
+          
+  /applications/{applicationId}/screenFlow:
+    get:
+      tags:
+        - screenFlow
+      summary: View Particular application's screen flow
+      description: Get the Application's screen flow
+      operationId: getScreenFlowByApplicationId
+      parameters:   
+        - name: applicationId
+          in: path
+          description: Application ID which is uniquely identifies registered application
+          required: true
+          explode: true
+          schema:
+            type: string
+            items:
+              type: string
+      security:
+          - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScreenFlow'          
+        '404':
+          description: Application not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+        '401':  
+          description: Invalid bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+        '500':
+          description: Operation Failed. Please try after some time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+    
+    put:
+      tags:
+        - screenFlow
+      summary: Modify the application's existing screen flow
+      description: Modify the screen flow of selected application
+      operationId: modifyScreenFlowByApplicationId
+      parameters:
+        - name: applicationId
+          in: path
+          description: Application ID which is uniquely identifies registered application
+          required: true
+          schema:
+            type: string
+            example: application123
+      requestBody:
+        description: Update an existing screen flow
+        content:
+          application/json:
+            schema:
+               $ref:  '#/components/schemas/ScreenFlow'
+      responses:
+        '200':
+          description: Screen flow modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '401':  
+          description: Invalid bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+        '500':
+          description: Operation Failed. Please try after some time
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FailureResponse'
+      security:
+          - bearerAuth: []    
+              
+  
+          
+components:
+  schemas:
+    ScreenFlow:
+      type: object
+      properties:
+        applicationId:
+            type: string
+            example: 1234667812345678
+        applicationScreenflow:
+            type: array
+            items:
+                  $ref:  '#/components/schemas/Screen'
+                  
+    Screen:
+      type: object
+      properties:
+        screenName:
+          type: string
+          format: string
+          example: "Home"
+        portName:
+          type: string
+          format: string
+          example: "Home.Login"
+        destinationView:
+          type: object
+          format: string
+          example: Login
+          
+    Applications:
+      type: object
+      properties:
+        applicationId:
+          type: integer
+          format: UUID
+          example: 66ceb688-a2b3-11ed-a8fc-0242ac120002
+        applicationName:
+          type: string
+          example: "SocialBook"
+          
+      
+    UserLogin:
+      type: object
+      properties:
+        username:
+          type: string
+          example: userEmailId@gmail.com 
+        password:
+          type: string
+          example: '12345'
+    LoginResponse:
+      type: object
+      properties:
+        token: 
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    
+    SuccessResponse:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "SUCCESS"
+        meesage: 
+          type: string
+          example: Custom message about the operation
+          
+    FailureResponse:
+      type: object
+      properties:
+        status: 
+          type: string
+          example: "FAILURE"
+        meesage: 
+          type: string
+          example: Error message about the operation
+  securitySchemes:  
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT 
+
+    
+  
+        
+          

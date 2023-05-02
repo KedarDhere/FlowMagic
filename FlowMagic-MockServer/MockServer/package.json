@@ -1,0 +1,22 @@
+{
+  "name": "mock-server",
+  "version": "1.0.0",
+  "description": "Flow Magic Mock Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "FLOWMAGIC-MOCKSERVER"
+  },
+  "author": "Kedar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
