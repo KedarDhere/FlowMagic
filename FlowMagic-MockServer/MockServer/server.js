@@ -12,6 +12,7 @@ app.use(function(req, res, next) {
     console.log("Request Received")
     console.log("Method: ", req.method)
     console.log("URL: ", req.url)
+    console.log("Body:", req.body)
     next()
 })
 
@@ -44,6 +45,7 @@ app.get('/applications/:companyName', auth.checkWebToken, async function (req, r
     const companyName = req.params.companyName
     if (companyName.toLowerCase() === "amazon") {
         res.status(200).send({
+            companyName: companyName,
             applications: [
                 {
                     "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
@@ -76,7 +78,7 @@ app.get('/applications/:applicationId/screenFlow', function(req, res, next) {
     // console.log("appId: ", appId)
     // console.log("authToken: ", authToken)
     // if (appId == applicationID && token == authToken){
-    if (appId == applicationID){
+    if (appId === applicationID){
         res.status(200).send({
             "applicationId": "66ceb688a2b311eda8fc0242ac120002",
             "applicationScreenFlow": [
@@ -125,9 +127,33 @@ app.put('/applications/:applicationId/screenFlow', function(req, res, next) {
             'message': 'Request needs Application Id and active bearer token'
         })
     }
+})
+
+/* Adding following endpoint as Front End will require All the screens information */
+app.get('/applications/:applicationId/screens', function (req, res, next) {
+    const authToken = req.headers.authorization
+    const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
+    const applicationID = req.params.applicationId
+    console.log("Test")
+    if (appId == applicationID) {
+        res.status(200).send([
+            { screenName: "Home", portNames: ["SignUp", "Login", "RandomPage"], view: "Home" },
+            { screenName: "Login", portNames: [], view: "Login" },
+            { screenName: "SignUp", portNames: [], view: "SignUp" },
+            {screenName: "RandomPage", portNames: [], view: "RandomPage"}            
+        ])
+    }
+    else {
+        res.status(400).send({
+            'status' : 'Failure',
+            'message': 'Request needs Application Id and active bearer token'
+        })
+    }
     next()
 })
-app.use('*', function(err,req, res, next) {
+
+
+app.use('*', function (err, req, res, next) {
     // res.status(404).send({
     //     // err: "This URL was not recognized: " + req.originalUrl
     //     err: err
