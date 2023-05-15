@@ -1,4 +1,4 @@
-import { useCallback  } from "react"
+import { useCallback} from "react"
 import ReactFlow, {
         useNodesState,
         useEdgesState,
@@ -9,6 +9,8 @@ import ReactFlow, {
 } from "reactflow"
 import 'reactflow/dist/style.css'
 import CustomNode from './CustomNode'
+
+export let currentFlow = []
 
 const initialNodes = [
   { id: "Home", position: { x: 0, y: 0 }, data: { label: "Home", position: Position.Right, ports: ["Login", "SignUp"]},type: 'customNode'},
@@ -30,8 +32,8 @@ function ScreenFlow() {
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
-
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges])
+  currentFlow = edges
   return (
       <div style={{ width: '100vw', height: '100vh' }}>
           <ReactFlow
@@ -49,4 +51,7 @@ function ScreenFlow() {
   )
 }
 
+
+
 export default ScreenFlow
+
