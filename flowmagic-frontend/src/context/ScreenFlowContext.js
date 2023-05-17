@@ -1,5 +1,5 @@
 import { createContext, useState } from "react"
-import { currentFlow } from "../components/ScreenFlow"
+import { updatedEdges } from "../components/ScreenFlow"
 
 const ScreenFlowContext = createContext()
 
@@ -43,15 +43,34 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     }
 
+    const getUpdatedFlow = () => {
+        const updatedScreenFlow = applicationScreenFlow
+        // console.log("TEsts")
+        // console.log(updatedScreenFlow.applicationScreenFlow)
+        //Change the ScreenFlow on the basis of edges and sourceHandle(portName)
+        updatedScreenFlow.applicationScreenFlow.map((screenPort) => {
+            const temp = updatedEdges.filter((flow) => flow.sourceHandle === screenPort.portName)
+            if (temp.length > 0 && temp[0].sourceHandle === screenPort.portName) {
+                screenPort.destinationView = temp[0].target
+            }
+        })
+            
+        // console.log(updatedScreenFlow.applicationScreenFlow)
+        return updatedScreenFlow.applicationScreenFlow
+    }
+
     const updateFlow = async () => {
         console.log("Test")
         try {
+            const updatedFlowtemp = getUpdatedFlow();
+            console.log(updatedFlowtemp)
             await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
                 method: "PUT",
-                body: JSON.stringify({
-                    "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
-                    "applicationScreenflow": currentFlow
-                }),
+                body: JSON.stringify(
+                    // "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
+                    getUpdatedFlow()
+                
+                ),
                 headers: {
                     authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s',
                     'Content-Type': 'application/json'
@@ -69,8 +88,9 @@ export const ScreenFlowContextProvider = ({ children }) => {
             fetchScreenFlow,
             screenInfo,
             fetchScreenInfo,
-            currentFlow,
-            updateFlow
+            currentFlow: updatedEdges,
+            updateFlow,
+            getUpdatedFlow
         }}>
             {children}
         </ScreenFlowContext.Provider>

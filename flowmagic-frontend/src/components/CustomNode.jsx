@@ -6,9 +6,9 @@ function CustomNode() {
     <div className='custom-node'>
     <div className="custom-node-header">Home</div>
     <div>
-          <Handle type="source" position={Position.Right} id="Home.Login">Home.SignUp</Handle>
-
-          <Handle type="source" position={Position.Right} id="Home.SignUp" style={handleStyle}>Home.Login</Handle>
+              <Handle type="source" position={Position.Right} id="Home.Login">Home.Login</Handle>
+              <Handle type="source" position={Position.Right} id="Home.SignUp" style={handleStyle}>Home.SignUp</Handle>
+              <Handle type="source" position={Position.Right} id="Home.RandomPage" style={{ top: 180 }}>Home.RandomPage</Handle>
     </div>
 </div>
   )

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import ScreenFlowContext from '../context/ScreenFlowContext'
 
 function UpdateCancelBtn() {
-  const { updateFlow } = useContext(ScreenFlowContext)
+  const { updateFlow, getUpdatedFlow } = useContext(ScreenFlowContext)
 
     return (
         <section id="update-flow-btn">

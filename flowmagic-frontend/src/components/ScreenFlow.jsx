@@ -10,7 +10,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css'
 import CustomNode from './CustomNode'
 
-export let currentFlow = []
+export let updatedEdges = []
 
 const initialNodes = [
   { id: "Home", position: { x: 0, y: 0 }, data: { label: "Home", position: Position.Right, ports: ["Login", "SignUp"]},type: 'customNode'},
@@ -20,8 +20,9 @@ const initialNodes = [
 ]
 
 const initialEdges = [
-  {id:"Home.Login", source: "Home", target:"SignUp", sourceHandle: 'Home.Login'},
-  {id:"Home.SignUp", source: "Home", target:"Login", sourceHandle:'Home.SignUp'}
+  {id:"Home.Login", source: "Home", target:"Login", sourceHandle: 'Home.Login'},
+  {id:"Home.SignUp", source: "Home", target:"SignUp", sourceHandle:'Home.SignUp'},
+  {id:"Home.RandomPage", source: "Home", target:"RandomPage", sourceHandle:'Home.RandomPage'},
 ]
 
 const nodeTypes = {
@@ -33,7 +34,7 @@ function ScreenFlow() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges])
-  currentFlow = edges
+  updatedEdges = edges
   return (
       <div style={{ width: '100vw', height: '100vh' }}>
           <ReactFlow

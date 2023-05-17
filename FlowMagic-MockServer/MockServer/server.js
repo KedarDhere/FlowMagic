@@ -4,7 +4,7 @@ const app = express()
 const auth = require("./auth")
 const cors = require('cors')
 const { applicationsData } = require('./data.json')
-let { applicationScreenFlow } = require('./data.json')
+let { applicationScreenFlow: applicationScreenFlow } = require('./data.json')
 
 const fs = require('fs');
 const path = require('path');
@@ -12,6 +12,8 @@ const path = require('path');
 const dataFilePath = path.join(__dirname, 'data.json'); // Adjust path to your data.json file
 let data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
 
+const { Mutex } = require('async-mutex');
+const mutex = new Mutex();
 
 app.use(cors())
 
@@ -85,7 +87,7 @@ app.get('/applications/:applicationId/screenFlow', function(req, res, next) {
         }
 })
 
-app.put('/applications/:applicationId/screenFlow', function(req, res, next) {
+app.put('/applications/:applicationId/screenFlow', async function(req, res, next) {
     const authToken = req.headers.authorization
     const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
     const applicationID = req.params.applicationId
@@ -100,13 +102,16 @@ app.put('/applications/:applicationId/screenFlow', function(req, res, next) {
     //     applicationScreenFlow = screenFlow
     //     res.status(200).send(applicationScreenFlow)
     // }
+    const release = await mutex.acquire();
     if (appId == applicationID && token == authToken && req.body) {
         // Replace its screen flow data
         data.applicationScreenFlow.applicationScreenFlow = newScreenFlow;
-    
-        // Write updated data back to the file
-        fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
-    
+        try {
+                // Write updated data back to the file
+                fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
+        } finally {
+            release()
+    }
         return res.status(200).send(data.applicationScreenFlow);
       }
     else {
