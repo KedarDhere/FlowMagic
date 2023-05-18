@@ -22,12 +22,12 @@
         "destinationView": "RandomPage"
       },
       {
-        "screenName": "Login",
+        "screenName": "Home",
         "portName": "Home.Login",
-        "destinationView": "RandomPage"
+        "destinationView": "Login"
       },
       {
-        "screenName": "SignUp",
+        "screenName": "Home",
         "portName": "Home.SignUp",
         "destinationView": "SignUp"
       }
