@@ -4,12 +4,16 @@ import Modal from 'react-bootstrap/Modal';
 import ScreenFlowContext from '../context/ScreenFlowContext'
 
 export default function UpdateFlowPopUp() {
-  const { updateFlow } = useContext(ScreenFlowContext)
+  const { buildEdges } = useContext(ScreenFlowContext)
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const refreshPage = ()=>{
+    window.location.reload();
+  }
+  
   return (
     <>
       <Button type="button" className="btn btn-danger" onClick={handleShow}>Cancel</Button>  
@@ -22,7 +26,10 @@ export default function UpdateFlowPopUp() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={updateFlow}>
+          <Button variant="primary" onClick={() => {
+            refreshPage()
+            handleClose()
+          }}>
             Cancel Changes
           </Button>
         </Modal.Footer>

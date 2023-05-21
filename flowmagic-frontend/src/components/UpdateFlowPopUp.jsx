@@ -10,6 +10,10 @@ export default function UpdateFlowPopUp() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const refreshPage = ()=>{
+    window.location.reload();
+  }
+
   return (
     <>
       <Button variant="primary" class="btn btn-success" onClick={handleShow}>
@@ -24,7 +28,11 @@ export default function UpdateFlowPopUp() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={updateFlow}>
+          <Button variant="primary" onClick={() => {
+            updateFlow()
+            refreshPage()
+            handleClose()
+          }}>
             Save Changes
           </Button>
         </Modal.Footer>

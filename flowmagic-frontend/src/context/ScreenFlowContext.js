@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react"
 import { updatedEdges } from "../components/ScreenFlow"
+import Alert from 'react-bootstrap/Alert';
 
 const ScreenFlowContext = createContext()
 
@@ -79,18 +80,6 @@ export const ScreenFlowContextProvider = ({ children }) => {
         }
     }
 
-    // const srvScreenFlow = applicationScreenFlow.applicationScreenFlow
-    // console.log(applicationScreenFlow)
-    // const buildEdges = srvScreenFlow.map(element => {
-    //     return {
-    //         id: element.portName,
-    //         source: element.screenName,
-    //         target: element.destinationView,
-    //         sourceHandle: element.portName
-    //     }
-            
-    // });
-
     const fetchScreenInfo = async () => {
         try {
             const response = await fetch("http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screens", {
@@ -137,7 +126,26 @@ export const ScreenFlowContextProvider = ({ children }) => {
                     'Content-Type': 'application/json'
                 }
             })
+            return (
+                <div>
+                    {
+                        <Alert variant="success">
+                            <Alert.Heading>Hey, nice to see you</Alert.Heading>
+                            <p>
+                                Aww yeah, you successfully read this important alert message. This
+                                example text is going to run a bit longer so that you can see how
+                                spacing within an alert works with this kind of content.
+                            </p>
+                            <hr />
+                            <p className="mb-0">
+                                Whenever you need to, be sure to use margin utilities to keep things
+                                nice and tidy.
+                            </p>
+                        </Alert>
+                    }
+                </div>
 
+        )
         } catch (error) {
             console.log(error)
         }

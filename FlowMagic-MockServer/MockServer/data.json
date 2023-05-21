@@ -24,7 +24,7 @@
       {
         "screenName": "Home",
         "portName": "Home.Login",
-        "destinationView": "SignUp"
+        "destinationView": "Login"
       },
       {
         "screenName": "Home",
