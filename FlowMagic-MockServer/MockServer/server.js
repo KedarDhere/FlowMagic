@@ -3,7 +3,7 @@ const port = process.env.port || 8000
 const app = express()
 const auth = require("./auth")
 const cors = require('cors')
-const { applicationsData } = require('./data.json')
+const { applicationsData, nodesInfo } = require('./data.json')
 let { applicationScreenFlow: applicationScreenFlow } = require('./data.json')
 
 const fs = require('fs');
@@ -122,7 +122,22 @@ app.put('/applications/:applicationId/screenFlow', async function(req, res, next
     }
 })
 
-/* Adding following endpoint as Front End will require All the screens information */
+// Adding the following endpoint to retrieve the nodes' information
+app.get('/applications/:applicationId/nodesInfo', function (req, res, next) {
+    const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
+    const applicationID = req.params.applicationId
+    console.log(nodesInfo)
+    if (appId === applicationID) {
+        res.status(200).send(nodesInfo)
+    } else {
+        res.status(400).send({
+            'status' : 'Failure',
+            'message': 'Request needs Application Id and active bearer token'
+        })
+    }
+})
+
+// Adding following endpoint as Front End will require All the screens information 
 app.get('/applications/:applicationId/screens', function (req, res, next) {
     const authToken = req.headers.authorization
     const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
@@ -144,7 +159,6 @@ app.get('/applications/:applicationId/screens', function (req, res, next) {
     }
     next()
 })
-
 
 app.use('*', function (err, req, res, next) {
     // res.status(404).send({

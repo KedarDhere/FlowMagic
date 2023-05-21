@@ -58,5 +58,95 @@
       "portNames": [],
       "view": "RandomPage"
     }
+  ],
+  "nodesInfo": [
+    {
+      "id": "Home",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "Home",
+        "handleData": [
+          {
+            "type": "source",
+            "position": "Right",
+            "id": "Home.Login",
+            "portName": "Home.Login"
+          },
+          {
+            "type": "source",
+            "position": "Right",
+            "id": "Home.SignUp",
+            "portName": "Home.SignUp"
+          },
+          {
+            "type": "source",
+            "position": "Right",
+            "id": "Home.RandomPage",
+            "portName": "Home.RandomPage"
+          }
+        ]
+      },
+      "type": "customNode"
+    },
+    {
+      "id": "Login",
+      "position": {
+        "x": 300,
+        "y": 0
+      },
+      "data": {
+        "label": "Login",
+        "handleData": [
+          {
+            "type": "target",
+            "position": "Left",
+            "id": "Login",
+            "portName": "Login"
+          }
+        ]
+      },
+      "type": "customNode"
+    },
+    {
+      "id": "SignUp",
+      "position": {
+        "x": 500,
+        "y": 100
+      },
+      "data": {
+        "label": "SignUp",
+        "handleData": [
+          {
+            "type": "target",
+            "position": "Left",
+            "id": "SignUp",
+            "portName": "SignUp"
+          }
+        ]
+      },
+      "type": "customNode"
+    },
+    {
+      "id": "RandomPage",
+      "position": {
+        "x": 700,
+        "y": 200
+      },
+      "data": {
+        "label": "RandomPage",
+        "handleData": [
+          {
+            "type": "target",
+            "position": "Left",
+            "id": "RandomPage",
+            "portName": "RandomPage"
+          }
+        ]
+      },
+      "type": "customNode"
+    }
   ]
 }

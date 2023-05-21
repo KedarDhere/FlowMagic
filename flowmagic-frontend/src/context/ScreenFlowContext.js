@@ -32,11 +32,30 @@ export const buildEdges = async () => {
         }
 } 
 
+export const fetchNodesData = async() => {
+    try {
+        const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/nodesInfo`, {
+            headers: {
+                authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
+            }
+        })
+        if (!response.ok) {
+            throw Error
+        }
+
+        const data = await response.json()
+        return data
+    } catch(error) {
+        console.log(error)
+    }
+}
+
 export const ScreenFlowContextProvider = ({ children }) => {
 
     useEffect(() => {
         fetchScreenFlow()
         buildEdges()
+        fetchNodesData()
     }, [])
 
     const [applicationScreenFlow, setApplicationScreenFlow] = useState([])
@@ -133,7 +152,8 @@ export const ScreenFlowContextProvider = ({ children }) => {
             currentFlow: updatedEdges,
             updateFlow,
             getUpdatedFlow,
-            buildEdges
+            buildEdges,
+            fetchNodesData
         }}>
             {children}
         </ScreenFlowContext.Provider>
