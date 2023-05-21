@@ -11,64 +11,11 @@ import CustomNode from './CustomNode'
 import ScreenFlowContext from "../context/ScreenFlowContext"
 export let updatedEdges = []
 
-// const initialNodes = [
-  // // { id: "Home", position: { x: 0, y: 0 }, data: { label: "Home", position: Position.Right, ports: ["Home.Login", "Home.SignUp","Home.RandomPage"]},type: 'customNode'},
-  // {
-  //   id: "Home", position: { x: 0, y: 0 },
-  //   data: {
-  //           label: 'Home',
-  //           handleData: [
-  //             {
-  //               type: "source", position: Position.Right, id: "Home.Login", portName: "Home.Login",
-  //             },
-  //             {
-  //               type: "source", position: Position.Right, id: "Home.SignUp", portName: "Home.SignUp",
-  //             },
-  //             {
-  //               type: "source", position: Position.Right, id: "Home.RandomPage", portName: "Home.RandomPage",
-  //             }]
-  //         },
-  //   type: 'customNode',
-  // },
-  // {
-  //   id: "Login", position: { x: 300, y: 0 },
-  //   data: {
-  //           label: "Login",
-  //           handleData: [{
-  //             type: "target", position: Position.Left, id: "Login", portName: "Login",
-  //           }]
-  //         },
-  //   type: 'customNode',
-  // },
-  // {
-  //   id: "SignUp", position: { x: 500, y: 100 },
-  //   data: {
-  //           label: "SignUp",
-  //           handleData: [
-  //           {
-  //             type: "target", position: Position.Left, id: "SignUp", portName: "SignUp",
-  //           }]
-  //         },
-  //   type: 'customNode',
-  // },
-  // {
-  //   id: "RandomPage", position: { x: 700, y: 200 }, data: {
-  //     label: "RandomPage",
-  //     handleData:     [{
-  //       type: "target", position: Position.Left, id: "RandomPage", portName: "RandomPage",
-  //     }]
-  //   },
-  //   type: 'customNode',
-  //   },
-// ]
+
 const initialNodes = []
 
 
-let initialEdges = [
-  // {id:"Home.Login", source: "Home", target:"Login", sourceHandle: 'Home.Login'},
-  // {id:"Home.SignUp", source: "Home", target:"SignUp", sourceHandle:'Home.SignUp'},
-  // {id:"Home.RandomPage", source: "Home", target:"RandomPage", sourceHandle:'Home.RandomPage'},
-]
+let initialEdges = []
 
 const nodeTypes = {
   customNode: CustomNode
@@ -93,7 +40,7 @@ const nodeTypes = {
     }, [])
 
     useEffect(() => {
-      if (nodes.length > 0) {
+      if (nodes) {
         console.log(nodes)
         const loadEdges = async () => {
           const newEdges = await buildEdges()

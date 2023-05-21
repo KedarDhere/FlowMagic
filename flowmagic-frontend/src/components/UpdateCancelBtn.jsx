@@ -1,13 +1,14 @@
 import { useContext } from 'react'
 import ScreenFlowContext from '../context/ScreenFlowContext'
+import Button from 'react-bootstrap/Button';
 
 function UpdateCancelBtn() {
   const { updateFlow, getUpdatedFlow } = useContext(ScreenFlowContext)
 
     return (
         <section id="update-flow-btn">
-        <button type="submit" className="btn submit" onClick={updateFlow}>Update Flow</button>
-        <button type="reset" className="btn cancel">Cancel</button>   
+        <Button type="submit" className="btn submit" onClick={updateFlow}>Update Flow</Button>
+        <Button type="reset" className="btn cancel">Cancel</Button>   
             
       </section>
   )

@@ -4,6 +4,8 @@ import ScreenFlowContext from "../context/ScreenFlowContext"
 import HomePageContext from "../context/HomePageContext"
 import UpdateCancelBtn from "../components/UpdateCancelBtn"
 import ScreenFlow from "../components/ScreenFlow"
+import UpdateFlowPopUp from "../components/UpdateFlowPopUp"
+import CancelFlowChanges from "../components/CancelFlowChanges"
 
 function AppScreenFlow() {
     const { fetchScreenFlow, fetchScreenInfo } = useContext(ScreenFlowContext)
@@ -24,7 +26,9 @@ function AppScreenFlow() {
               <section id="screen-flow">
                   <ScreenFlow />
               </section>
-              <UpdateCancelBtn />
+              {/* <UpdateCancelBtn /> */}
+              <UpdateFlowPopUp />
+              <CancelFlowChanges></CancelFlowChanges>
           </div>
     </div>
   )
