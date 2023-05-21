@@ -12,7 +12,7 @@ export default function UpdateFlowPopUp() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" class="btn btn-success" onClick={handleShow}>
         Update Flow
       </Button>
       <Modal show={show} onHide={handleClose} animation={false}>

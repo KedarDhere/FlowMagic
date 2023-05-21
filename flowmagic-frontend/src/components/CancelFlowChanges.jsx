@@ -12,7 +12,7 @@ export default function UpdateFlowPopUp() {
 
   return (
     <>
-      <Button type="reset" className="btn cancel" onClick={handleShow}>Cancel</Button>  
+      <Button type="button" className="btn btn-danger" onClick={handleShow}>Cancel</Button>  
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Cancel Changes</Modal.Title>

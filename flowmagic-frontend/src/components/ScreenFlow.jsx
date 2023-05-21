@@ -5,10 +5,13 @@ import ReactFlow, {
         addEdge,
         Controls,
         Background,
+        Panel
 } from "reactflow"
 import 'reactflow/dist/style.css'
 import CustomNode from './CustomNode'
 import ScreenFlowContext from "../context/ScreenFlowContext"
+import Button from 'react-bootstrap/Button';
+import Help, {setModalShow} from '../components/Help'
 export let updatedEdges = []
 
 
@@ -62,7 +65,7 @@ const nodeTypes = {
     console.log(edges)
     updatedEdges = edges
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
+        <div style={{ width: '100%', height: '100%' }}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -71,8 +74,9 @@ const nodeTypes = {
                 onConnect={onConnect}
                 nodeTypes={nodeTypes}
         >
-                <Controls />
-                <Background variant="dots" gap={12} size={1} />
+                <Controls/>
+          <Background variant="dots" gap={12} size={1} />
+          <Help />
             </ReactFlow>
         </div>
     )
