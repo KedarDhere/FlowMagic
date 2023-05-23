@@ -16,7 +16,7 @@
   "applicationScreenFlow": {
     "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
     "applicationName": "SocialBook",
-    "lastUpdatedOn": "05:22:2023:21:35:58",
+    "lastUpdatedOn": "05:23:2023:11:20:52",
     "applicationScreenFlow": [
       {
         "screenName": "Home",
@@ -68,6 +68,7 @@
         "x": 150,
         "y": 140
       },
+      "deletable": false,
       "data": {
         "label": "HOME",
         "handleData": [
@@ -99,6 +100,7 @@
         "x": 550,
         "y": 0
       },
+      "deletable": false,
       "data": {
         "label": "LOGIN",
         "handleData": [
@@ -118,6 +120,7 @@
         "x": 800,
         "y": 150
       },
+      "deletable": false,
       "data": {
         "label": "SIGNUP",
         "handleData": [
@@ -137,6 +140,7 @@
         "x": 550,
         "y": 250
       },
+      "deletable": false,
       "data": {
         "label": "RANDOMPAGE",
         "handleData": [
