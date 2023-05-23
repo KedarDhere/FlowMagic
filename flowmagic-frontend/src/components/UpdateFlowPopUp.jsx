@@ -16,22 +16,23 @@ export default function UpdateFlowPopUp() {
 
   return (
     <>
-      <Button variant="primary" class="btn btn-success" onClick={handleShow}>
+      <Button variant="primary" className="btn btn-success" onClick={handleShow}>
         Update Flow
       </Button>
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Save Changes</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Do you want to save the changes?</Modal.Body>
+        <Modal.Body>Do you want to save the changes?
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={() => {
             updateFlow()
-            refreshPage()
             handleClose()
+            // refreshPage()
           }}>
             Save Changes
           </Button>

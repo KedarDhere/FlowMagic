@@ -1,17 +1,17 @@
-import { useCallback, useContext, useEffect, useState} from "react"
+
+import { useCallback, useContext, useEffect, useState } from "react"
 import ReactFlow, {
         useNodesState,
         useEdgesState,
         addEdge,
         Controls,
         Background,
-        Panel
 } from "reactflow"
 import 'reactflow/dist/style.css'
 import CustomNode from './CustomNode'
 import ScreenFlowContext from "../context/ScreenFlowContext"
-import Button from 'react-bootstrap/Button';
-import Help, {setModalShow} from '../components/Help'
+import Help from '../components/Help'
+import Reload from "./Reload"
 export let updatedEdges = []
 
 
@@ -34,20 +34,16 @@ const nodeTypes = {
     useEffect(() => {     
       const loadNodes = async () => {
         const newNodes = await fetchNodesData()
-        console.log(newNodes)
         setNodes(newNodes)
         setLoadingNodes(false)
       }
-      // console.log(initialNodes)
       loadNodes();
     }, [])
 
     useEffect(() => {
       if (nodes) {
-        console.log(nodes)
         const loadEdges = async () => {
           const newEdges = await buildEdges()
-          console.log(newEdges)
           setEdges(newEdges);
           setLoading(false);
         }
@@ -61,8 +57,6 @@ const nodeTypes = {
       return <>Still loading...</>
     }
     
-    console.log(nodes)
-    console.log(edges)
     updatedEdges = edges
     return (
         <div style={{ width: '100%', height: '100%' }}>
@@ -75,7 +69,7 @@ const nodeTypes = {
                 nodeTypes={nodeTypes}
         >
                 <Controls/>
-          <Background variant="dots" gap={12} size={1} />
+          <Background variant="lines" gap={12} size={1} />
           <Help />
             </ReactFlow>
         </div>

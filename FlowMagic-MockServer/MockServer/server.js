@@ -105,7 +105,7 @@ app.put('/applications/:applicationId/screenFlow', async function(req, res, next
     const release = await mutex.acquire();
     if (appId == applicationID && token == authToken && req.body) {
         // Replace its screen flow data
-        data.applicationScreenFlow.applicationScreenFlow = newScreenFlow;
+        data.applicationScreenFlow = newScreenFlow;
         try {
                 // Write updated data back to the file
                 fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');

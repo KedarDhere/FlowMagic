@@ -15,6 +15,8 @@
   ],
   "applicationScreenFlow": {
     "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
+    "applicationName": "SocialBook",
+    "lastUpdatedOn": "05:22:2023:19:21:46",
     "applicationScreenFlow": [
       {
         "screenName": "Home",
@@ -63,8 +65,8 @@
     {
       "id": "Home",
       "position": {
-        "x": 0,
-        "y": 0
+        "x": 150,
+        "y": 140
       },
       "data": {
         "label": "Home",
@@ -94,7 +96,7 @@
     {
       "id": "Login",
       "position": {
-        "x": 300,
+        "x": 550,
         "y": 0
       },
       "data": {
@@ -113,8 +115,8 @@
     {
       "id": "SignUp",
       "position": {
-        "x": 500,
-        "y": 100
+        "x": 800,
+        "y": 150
       },
       "data": {
         "label": "SignUp",
@@ -132,8 +134,8 @@
     {
       "id": "RandomPage",
       "position": {
-        "x": 700,
-        "y": 200
+        "x": 550,
+        "y": 250
       },
       "data": {
         "label": "RandomPage",

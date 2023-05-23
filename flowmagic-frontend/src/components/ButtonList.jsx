@@ -1,5 +1,6 @@
 import { useContext } from 'react'
-import Button from './Button'
+import ApplicatonNames from './ApplicationNames'
+import Button from 'react-bootstrap/esm/Button'
 import HomePageContext from '../context/HomePageContext'
 
 function ButtonList() {
@@ -10,7 +11,7 @@ function ButtonList() {
     <>
           {
               applications.map((application,index) => (
-                  <Button key={application.applicationId } name={application.applicationName}></Button>
+                  <ApplicatonNames key={application.applicationId } name={application.applicationName} className="btn btn-primary"></ApplicatonNames>
               ))
           }
       </>

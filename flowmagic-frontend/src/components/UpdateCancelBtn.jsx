@@ -9,7 +9,7 @@ function UpdateCancelBtn() {
         <section id="update-flow-btn">
         <Button type="submit" className="btn submit" onClick={updateFlow}>Update Flow</Button>
         <Button type="reset" className="btn cancel">Cancel</Button>   
-            
+        
       </section>
   )
 }

@@ -53,13 +53,19 @@ function MyVerticallyCenteredModal(props) {
 export default function Help() {
   const [modalShow, setModalShow] = React.useState(false);
 
+  const refreshPage = ()=>{
+    window.location.reload();
+}
+
   return (
     <>
-      {/* <Button variant="primary" onClick={() => setModalShow(true)}>
-        Launch vertically centered modal
-      </Button> */}
-        <Panel position="bottom-right" className="btn btn-info" onClick={() => setModalShow(true)}>Info</Panel>
+      <div className='grid-buttons'>
+        <Button position="top-right" className="btn btn-info grid-buttons" onClick={() => setModalShow(true)}>Info</Button>
 
+        {<Button position="top-right" className="btn btn-primary grid-buttons" onClick={refreshPage} >Reload</Button>}
+      </div>
+
+      
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}

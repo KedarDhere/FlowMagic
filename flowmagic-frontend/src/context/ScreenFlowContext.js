@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react"
 import { updatedEdges } from "../components/ScreenFlow"
-import Alert from 'react-bootstrap/Alert';
+import { format } from 'date-fns'
 
 const ScreenFlowContext = createContext()
 
@@ -22,7 +22,8 @@ export const buildEdges = async () => {
                 id: element.portName,
                 source: element.screenName,
                 target: element.destinationView,
-                sourceHandle: element.portName
+                sourceHandle: element.portName,
+                // animated: true
             }
                 
             })
@@ -61,7 +62,8 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const [applicationScreenFlow, setApplicationScreenFlow] = useState([])
     const [screenInfo, setScreenInfo] = useState([])
-
+    const [updFlowTimeStamp, setUpdFlowTimeStamp] = useState()
+  
     const fetchScreenFlow = async () => {
         try {
         const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
@@ -75,6 +77,7 @@ export const ScreenFlowContextProvider = ({ children }) => {
         }
             const data = await response.json()
             setApplicationScreenFlow(data)
+            setUpdFlowTimeStamp(data.lastUpdatedOn)
         } catch (error) {
             console.log(error)
         }
@@ -102,14 +105,14 @@ export const ScreenFlowContextProvider = ({ children }) => {
         const updatedScreenFlow = applicationScreenFlow
 
         //Change the ScreenFlow on the basis of edges and sourceHandle(portName)
-        updatedScreenFlow.applicationScreenFlow.map((screenPort) => {
+        updatedScreenFlow.applicationScreenFlow.forEach((screenPort) => {
             const temp = updatedEdges.filter((flow) => flow.sourceHandle === screenPort.portName)
             if (temp.length > 0 && temp[0].sourceHandle === screenPort.portName) {
                 screenPort.destinationView = temp[0].target
             }
         })
-            
-        return updatedScreenFlow.applicationScreenFlow
+        updatedScreenFlow.lastUpdatedOn = format(new Date(), 'MM:dd:yyyy:HH:mm:ss')
+        return updatedScreenFlow
     }
 
     const updateFlow = async () => {
@@ -118,34 +121,15 @@ export const ScreenFlowContextProvider = ({ children }) => {
                 method: "PUT",
                 body: JSON.stringify(
                     // "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
-                    getUpdatedFlow()
-                
+                    getUpdatedFlow(),
+
                 ),
                 headers: {
                     authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s',
                     'Content-Type': 'application/json'
                 }
             })
-            return (
-                <div>
-                    {
-                        <Alert variant="success">
-                            <Alert.Heading>Hey, nice to see you</Alert.Heading>
-                            <p>
-                                Aww yeah, you successfully read this important alert message. This
-                                example text is going to run a bit longer so that you can see how
-                                spacing within an alert works with this kind of content.
-                            </p>
-                            <hr />
-                            <p className="mb-0">
-                                Whenever you need to, be sure to use margin utilities to keep things
-                                nice and tidy.
-                            </p>
-                        </Alert>
-                    }
-                </div>
-
-        )
+            setUpdFlowTimeStamp(format(new Date(), 'MM:dd:yyyy:HH:mm:ss'))
         } catch (error) {
             console.log(error)
         }
@@ -161,7 +145,8 @@ export const ScreenFlowContextProvider = ({ children }) => {
             updateFlow,
             getUpdatedFlow,
             buildEdges,
-            fetchNodesData
+            fetchNodesData,
+            updFlowTimeStamp
         }}>
             {children}
         </ScreenFlowContext.Provider>
