@@ -9,7 +9,6 @@ import CancelFlowChanges from "../components/CancelFlowChanges"
 
 function AppScreenFlow() {
     const { fetchScreenFlow, fetchScreenInfo, updFlowTimeStamp, applicationScreenFlow } = useContext(ScreenFlowContext)
-    // const { applicationName } = useContext(HomePageContext)
 
     useEffect(() => {
         fetchScreenFlow()

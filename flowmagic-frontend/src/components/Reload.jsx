@@ -1,4 +1,7 @@
 import { Panel } from "reactflow";
+import { BsArrowRepeat } from "react-icons/bs"; 
+
+<i class="cil-reload"></i>
 function Reload() {
     const refreshPage = ()=>{
         window.location.reload();
@@ -7,7 +10,7 @@ function Reload() {
   return (
     <div>
       {/* <Button position="bottom-center" className="btn btn-primary" onClick={ refreshPage }>Reload</Button> */}
-      {<Panel position="top-right" className="btn btn-primary" onClick={refreshPage} >Reload</Panel>}
+      {<Panel position="top-left" className="btn btn-primary" onClick={refreshPage} ><BsArrowRepeat /></Panel>}
     </div>
   )
 }

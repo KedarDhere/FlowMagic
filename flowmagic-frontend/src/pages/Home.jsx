@@ -7,7 +7,7 @@ function Home() {
         <>
             <Header />
             <section id="home-section-container">
-                <h2>Select the application to work on</h2>
+                <h2>Registered Applications</h2>
                 <div id="application-list">
                     <ButtonList />
                 </div>

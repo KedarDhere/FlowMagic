@@ -1,8 +1,13 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import {Panel} from 'reactflow'
+import { Panel } from 'reactflow'
+import { BsArrowRepeat, BsInfoCircle } from "react-icons/bs"; 
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
 function MyVerticallyCenteredModal(props) {
+
   return (
     <Modal
       {...props}
@@ -55,16 +60,40 @@ export default function Help() {
 
   const refreshPage = ()=>{
     window.location.reload();
-}
+  }
+  
+  const renderGuidelinesTooltip = (props) => (
+    <Tooltip id="button-guidelines-tooltip" {...props}>
+      Usage Guidelines
+    </Tooltip>
+  );
 
+  const renderReloadTooltip = (props) => (
+    <Tooltip id="button-reload-tooltip" {...props}>
+      Reload
+    </Tooltip>
+  )
   return (
     <>
       <div className='grid-buttons'>
-        <Button position="top-right" className="btn btn-info grid-buttons" onClick={() => setModalShow(true)}>Info</Button>
-
-        {<Button position="top-right" className="btn btn-primary grid-buttons" onClick={refreshPage} >Reload</Button>}
-      </div>
-
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderGuidelinesTooltip}
+        >
+          <Button position="bottom-right" variant="light" className=" grid-buttons" onClick={() => setModalShow(true)}><BsInfoCircle size={30}/></Button>
+        </OverlayTrigger>
+        
+        <OverlayTrigger
+            placement="bottom"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderReloadTooltip}
+          >
+            {<Button position="top-right" variant="light" className="grid-buttons" onClick={refreshPage} ><BsArrowRepeat size={30} data-toggle="tooltip" data-placement="bottom" title="Reload" /></Button>}
+          </OverlayTrigger>
+        </div>
+     
+              {/* <Panel position="bottom-right" className="btn btn-primary grid-buttons" onClick={() => setModalShow(true)}>Info</Panel> */}
       
       <MyVerticallyCenteredModal
         show={modalShow}

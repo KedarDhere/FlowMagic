@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react"
 import { updatedEdges } from "../components/ScreenFlow"
 import { format } from 'date-fns'
-
+import { MarkerType} from 'reactflow'
 const ScreenFlowContext = createContext()
 
 export const buildEdges = async () => {
@@ -23,7 +23,9 @@ export const buildEdges = async () => {
                 source: element.screenName,
                 target: element.destinationView,
                 sourceHandle: element.portName,
-                // animated: true
+                markerEnd: {
+                    type: MarkerType.ArrowClosed,
+                }
             }
                 
             })
@@ -63,7 +65,8 @@ export const ScreenFlowContextProvider = ({ children }) => {
     const [applicationScreenFlow, setApplicationScreenFlow] = useState([])
     const [screenInfo, setScreenInfo] = useState([])
     const [updFlowTimeStamp, setUpdFlowTimeStamp] = useState()
-  
+    const [successAlert, setSuccessAlert] = useState(false)
+
     const fetchScreenFlow = async () => {
         try {
         const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
@@ -130,6 +133,7 @@ export const ScreenFlowContextProvider = ({ children }) => {
                 }
             })
             setUpdFlowTimeStamp(format(new Date(), 'MM:dd:yyyy:HH:mm:ss'))
+            setSuccessAlert(true)
         } catch (error) {
             console.log(error)
         }
@@ -146,7 +150,9 @@ export const ScreenFlowContextProvider = ({ children }) => {
             getUpdatedFlow,
             buildEdges,
             fetchNodesData,
-            updFlowTimeStamp
+            updFlowTimeStamp,
+            successAlert,
+            setSuccessAlert
         }}>
             {children}
         </ScreenFlowContext.Provider>

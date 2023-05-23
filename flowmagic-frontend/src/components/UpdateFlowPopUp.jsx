@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import ScreenFlowContext from '../context/ScreenFlowContext'
-
+import Alert from 'react-bootstrap/Alert';
 export default function UpdateFlowPopUp() {
-  const { updateFlow } = useContext(ScreenFlowContext)
+  const { updateFlow, successAlert, setSuccessAlert} = useContext(ScreenFlowContext)
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -13,6 +13,17 @@ export default function UpdateFlowPopUp() {
   const refreshPage = ()=>{
     window.location.reload();
   }
+
+  useEffect(() => {
+    if (successAlert) {
+      const timer = setTimeout(() => {
+        setSuccessAlert(false);
+        refreshPage();
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [successAlert, setSuccessAlert, refreshPage]);
 
   return (
     <>
@@ -33,11 +44,19 @@ export default function UpdateFlowPopUp() {
             updateFlow()
             handleClose()
             // refreshPage()
+            setSuccessAlert(false)
           }}>
             Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
+      {
+        successAlert &&
+          <Alert variant='success' style={{ position: 'fixed', top: 0 }}>
+           Changes Saved Successfully!
+          </Alert>
+       
+      }
     </>
   );
 }
