@@ -7,7 +7,8 @@
 
 /* Header */
 #header-container {
-    background-color: #cccccc5c;
+    background-color: #fff;
+    border-bottom: outset ;
     padding:10px 20px;
     margin:10px 20px;
     display: flex;
@@ -44,13 +45,14 @@
 .company-title {
     /* width: 311px;
     height: 76px; */
+    margin-top: 5px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
     line-height: 26px;
     letter-spacing: 0.5px;
-    color: #1D54E2;
+    color: #1d6de5;
 }
 
 
@@ -64,15 +66,20 @@
     height: 70vh;
 }
 
+#home-section-container h2 {
+    padding-bottom: 5px;;
+    border-bottom: double ;
+}
 #application-list {
     margin-top:10px;
-    background-color: #cccccc5c;
+    background-color: #fff;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex:1;
 }
 .application-names {
-    width: 200px;
+    width: 150px;
+    height: 200px;
     background: #2196F3;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 100px;
@@ -131,7 +138,9 @@
     margin: 50px 16px; */
     color: #212227;
     border-radius: 7px 7px 0px 0px;
-    text-align: left;
+    border-bottom: #000 1px solid;
+    background-color: aquamarine;
+    text-align: center;
     font-weight: 600;
     font-size: 14px; 
     letter-spacing: 0.1px; 
@@ -139,12 +148,13 @@
   
   .custom-node .react-flow__handle {
     top: 24px;
-    right: -5px;
-    width: 10px;
-    height: 10px; 
+    right: -6px;
+    width: 11px;
+    height: 11px; 
     border-radius: 20px; 
     background-color: #778899;
   }
+
 
   .react-flow__edge-path {
     cursor: pointer;
@@ -171,3 +181,5 @@
     gap: 10px; 
     z-index: 10;
   }
+
+  

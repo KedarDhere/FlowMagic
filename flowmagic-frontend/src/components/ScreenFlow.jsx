@@ -11,7 +11,6 @@ import 'reactflow/dist/style.css'
 import CustomNode from './CustomNode'
 import ScreenFlowContext from "../context/ScreenFlowContext"
 import Help from '../components/Help'
-import Reload from "./Reload"
 export let updatedEdges = []
 
 

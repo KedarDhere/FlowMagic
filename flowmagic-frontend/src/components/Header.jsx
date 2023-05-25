@@ -1,11 +1,7 @@
-import { BsPCircleFill }  from 'react-icons/bs'
 import { useContext } from 'react'
 import HomePageContext from '../context/HomePageContext'
-
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row';
+
 
 
 const CircleIcon = ({ letter }) => (
@@ -33,19 +29,9 @@ function Header() {
         <div className="logout">
             <CircleIcon letter="A"  />
         </div>
-        <h3 className='company-title'>{ companyName }</h3>
+        <h3 className='company-title'>{ companyName[0].toUpperCase() + companyName.slice(1) }</h3>
       </div>
-        {/* <h3 className='flow-magic'>Flow Magic</h3> */}
-        {/* <Container>
-                <Row>
-                    <Col xs={6} md={4}>
-                    <Image src={process.env.PUBLIC_URL + '/FlowMagic.png'} alt="Flow Magic Logo" />
-                    </Col>
-                </Row>
-          </Container> */}
-
         <Image src={process.env.PUBLIC_URL + '/FlowMagic.png'} alt="Flow Magic Logo" /> 
-
     </div>
   )
 }
