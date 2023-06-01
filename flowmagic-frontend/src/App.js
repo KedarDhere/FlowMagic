@@ -1,15 +1,18 @@
 import Home from "./pages/Home"
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
 import { ApplicationDetailsProvider } from "./context/HomePageContext"
+import { ScreenFlowContextProvider } from "./context/ScreenFlowContext"
+import AppScreenFlow from "./pages/AppScreenFlow"
 
 function App() {
     return (
         <ApplicationDetailsProvider>
-            <Router>
+            <ScreenFlowContextProvider>
                 <Routes>
-                    <Route path="/applications/:companyName" element={<Home/>}></Route>
+                    <Route exact path="/applications/:companyName" element={<Home />}></Route>
+                    <Route exact path="/application/*" element={<AppScreenFlow/>}></Route>
                 </Routes>
-            </Router>
+                </ScreenFlowContextProvider>
         </ApplicationDetailsProvider>
 
   )

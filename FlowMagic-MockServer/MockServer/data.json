@@ -1,0 +1,158 @@
+{
+  "applicationsData": [
+    {
+      "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
+      "applicationName": "SocialBook"
+    },
+    {
+      "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120003",
+      "applicationName": "Instagram"
+    },
+    {
+      "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120004",
+      "applicationName": "Music"
+    }
+  ],
+  "applicationScreenFlow": {
+    "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
+    "applicationName": "SocialBook",
+    "lastUpdatedOn": "05:23:2023:15:27:42",
+    "applicationScreenFlow": [
+      {
+        "screenName": "Home",
+        "portName": "Home.RandomPage",
+        "destinationView": "RandomPage"
+      },
+      {
+        "screenName": "Home",
+        "portName": "Home.Login",
+        "destinationView": "Login"
+      },
+      {
+        "screenName": "Home",
+        "portName": "Home.SignUp",
+        "destinationView": "SignUp"
+      }
+    ]
+  },
+  "screenInfo": [
+    {
+      "screenName": "Home",
+      "portNames": [
+        "SignUp",
+        "Login",
+        "RandomPage"
+      ],
+      "view": "Home"
+    },
+    {
+      "screenName": "Login",
+      "portNames": [],
+      "view": "Login"
+    },
+    {
+      "screenName": "SignUp",
+      "portNames": [],
+      "view": "SignUp"
+    },
+    {
+      "screenName": "RandomPage",
+      "portNames": [],
+      "view": "RandomPage"
+    }
+  ],
+  "nodesInfo": [
+    {
+      "id": "Home",
+      "position": {
+        "x": 150,
+        "y": 140
+      },
+      "deletable": false,
+      "data": {
+        "label": "HOME",
+        "handleData": [
+          {
+            "type": "source",
+            "position": "Right",
+            "id": "Home.Login",
+            "portName": "Home.Login"
+          },
+          {
+            "type": "source",
+            "position": "Right",
+            "id": "Home.SignUp",
+            "portName": "Home.SignUp"
+          },
+          {
+            "type": "source",
+            "position": "Right",
+            "id": "Home.RandomPage",
+            "portName": "Home.RandomPage"
+          }
+        ]
+      },
+      "type": "customNode"
+    },
+    {
+      "id": "Login",
+      "position": {
+        "x": 550,
+        "y": 0
+      },
+      "deletable": false,
+      "data": {
+        "label": "LOGIN",
+        "handleData": [
+          {
+            "type": "target",
+            "position": "Left",
+            "id": "Login",
+            "portName": "Login"
+          }
+        ]
+      },
+      "type": "customNode"
+    },
+    {
+      "id": "SignUp",
+      "position": {
+        "x": 800,
+        "y": 150
+      },
+      "deletable": false,
+      "data": {
+        "label": "SIGNUP",
+        "handleData": [
+          {
+            "type": "target",
+            "position": "Left",
+            "id": "SignUp",
+            "portName": "SignUp"
+          }
+        ]
+      },
+      "type": "customNode"
+    },
+    {
+      "id": "RandomPage",
+      "position": {
+        "x": 550,
+        "y": 250
+      },
+      "deletable": false,
+      "data": {
+        "label": "RANDOMPAGE",
+        "handleData": [
+          {
+            "type": "target",
+            "position": "Left",
+            "id": "RandomPage",
+            "portName": "RandomPage"
+          }
+        ]
+      },
+      "type": "customNode"
+    }
+  ]
+}

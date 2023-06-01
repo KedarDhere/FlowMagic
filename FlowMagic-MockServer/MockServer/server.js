@@ -3,6 +3,17 @@ const port = process.env.port || 8000
 const app = express()
 const auth = require("./auth")
 const cors = require('cors')
+const { applicationsData, nodesInfo } = require('./data.json')
+let { applicationScreenFlow: applicationScreenFlow } = require('./data.json')
+
+const fs = require('fs');
+const path = require('path');
+
+const dataFilePath = path.join(__dirname, 'data.json'); // Adjust path to your data.json file
+let data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+
+const { Mutex } = require('async-mutex');
+const mutex = new Mutex();
 
 app.use(cors())
 
@@ -46,20 +57,7 @@ app.get('/applications/:companyName', auth.checkWebToken, async function (req, r
     if (companyName.toLowerCase() === "amazon") {
         res.status(200).send({
             companyName: companyName,
-            applications: [
-                {
-                    "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
-                    "applicationName": "SocialBook"
-                },
-                {
-                    "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120003",
-                    "applicationName": "Instagram"
-                },
-                {
-                    "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120004",
-                    "applicationName": "Music"
-                }
-            ]
+            applications: applicationsData
         })
     } else {
             res.status(400).json({
@@ -79,26 +77,7 @@ app.get('/applications/:applicationId/screenFlow', function(req, res, next) {
     // console.log("authToken: ", authToken)
     // if (appId == applicationID && token == authToken){
     if (appId === applicationID){
-        res.status(200).send({
-            "applicationId": "66ceb688a2b311eda8fc0242ac120002",
-            "applicationScreenFlow": [
-              {
-                "screenName": "Home",
-                "portName": "Home.RandomPage",
-                "destinationView": "RandomPage"
-              },
-              {
-                "screenName": "Login",
-                "portName": "Home.Login",
-                "destinationView": "SignUp"
-              },
-              {
-                "screenName": "SignUp",
-                "portName": "Home.SignUp",
-                "destinationView": "RandomPage"
-              }
-            ]
-          })
+        res.status(200).send(applicationScreenFlow)
     }
     else {
         res.status(400).send({
@@ -108,19 +87,33 @@ app.get('/applications/:applicationId/screenFlow', function(req, res, next) {
         }
 })
 
-app.put('/applications/:applicationId/screenFlow', function(req, res, next) {
+app.put('/applications/:applicationId/screenFlow', async function(req, res, next) {
     const authToken = req.headers.authorization
     const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
     const applicationID = req.params.applicationId
+    const newScreenFlow = req.body
     // console.log("Test")
     console.log("applicationId: ", applicationID)
     console.log("appId: ", appId)
     console.log("authToken: ", authToken)
     console.log("token: ", token)
     console.log(req.body)
-    if (appId == applicationID && token == authToken && req.body){
-        res.status(200).send(req.body)
+    // if (appId == applicationID && token == authToken && req.body) {
+    //     applicationScreenFlow = screenFlow
+    //     res.status(200).send(applicationScreenFlow)
+    // }
+    const release = await mutex.acquire();
+    if (appId == applicationID && token == authToken && req.body) {
+        // Replace its screen flow data
+        data.applicationScreenFlow = newScreenFlow;
+        try {
+                // Write updated data back to the file
+                fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
+        } finally {
+            release()
     }
+        return res.status(200).send(data.applicationScreenFlow);
+      }
     else {
         res.status(400).send({
             'status' : 'Failure',
@@ -129,7 +122,22 @@ app.put('/applications/:applicationId/screenFlow', function(req, res, next) {
     }
 })
 
-/* Adding following endpoint as Front End will require All the screens information */
+// Adding the following endpoint to retrieve the nodes' information
+app.get('/applications/:applicationId/nodesInfo', function (req, res, next) {
+    const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
+    const applicationID = req.params.applicationId
+    console.log(nodesInfo)
+    if (appId === applicationID) {
+        res.status(200).send(nodesInfo)
+    } else {
+        res.status(400).send({
+            'status' : 'Failure',
+            'message': 'Request needs Application Id and active bearer token'
+        })
+    }
+})
+
+// Adding following endpoint as Front End will require All the screens information 
 app.get('/applications/:applicationId/screens', function (req, res, next) {
     const authToken = req.headers.authorization
     const appId = "66ceb688-a2b3-11ed-a8fc-0242ac120002"
@@ -151,7 +159,6 @@ app.get('/applications/:applicationId/screens', function (req, res, next) {
     }
     next()
 })
-
 
 app.use('*', function (err, req, res, next) {
     // res.status(404).send({
