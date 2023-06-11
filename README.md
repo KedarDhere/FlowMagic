@@ -39,8 +39,11 @@ Utilize our user-friendly drag-and-drop interface to edit your application's scr
 
 Presently, Flow Magic is designed to support iOS applications. However, we're working towards extending our support to Android applications in the near future.
 
----
+## Screenshots
 
-We greatly appreciate your support. Please consider starring/forking this repository to show your encouragement and stay updated on our progress.
+<img width="1437" alt="image" src="https://github.com/KedarDhere/FlowMagic/assets/97313818/63b986bf-9596-447e-b60c-baa9d4294864">
+<img width="1426" alt="image" src="https://github.com/KedarDhere/FlowMagic/assets/97313818/0e0b861e-1fa9-45f2-853c-7e9c903c1e72">
+
+---
 
 Happy Coding!
