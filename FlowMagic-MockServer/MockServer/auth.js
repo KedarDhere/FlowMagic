@@ -1,25 +1,9 @@
-const jwt = require("jsonwebtoken")
+const passport = require('passport')
 
-function checkWebToken(req, res, next) {
-    const authHeader = req.get('authorization') || ''
-    const authParts = authHeader.split(' ')
-    const token = authParts [0] === 'Bearer' ? authParts[1] : null
-
-    jwt.verify(token, 'secretKey', function(err, decoded) {
-        if (err) {
-            err = {
-              name: 'TokenExpiredError',
-              message: 'jwt expired',
-            }
-            res.status(401).send({
-              "status": 'FAILURE',
-              "message": err
-            })
-        }
-        else {
-          next()
-        }
-      })
+module.exports = function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next(); // If the user is authenticated, continue to the route handler
+  } else {
+    res.redirect('/login'); // If the user is not authenticated, redirect them to the login page
+  }
 }
-
-exports.checkWebToken = checkWebToken
