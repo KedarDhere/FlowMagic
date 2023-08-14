@@ -10,17 +10,37 @@ export const ApplicationDetailsProvider = ({ children }) => {
     const [applicationName, setApplicationName] = useState(" ")
     const navigate = useNavigate()
 
+    // const [user, setUser] = useState(null);
+    // const getUser = async () => {
+    // try {
+    //   const url = `http://localhost:8000/auth/login/success`;
+    //   const response = await fetch('http://localhost:8000/login/success', {
+    //     credentials: "include",
+    //    })
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! status: ${response.status}`);
+    //     }
+    //   const jsonResponse = await response.json();
+    //   console.log(jsonResponse)
+    //   setUser(jsonResponse.user._json);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    // };
+
+    // useEffect(() => {
+    //     getUser();
+    //   }, []);
+    
     useEffect(() => {
         fetchApplication()
     }, [])
 
-    //Fetch all the registered applications
+    // Fetch all the registered applications
     const fetchApplication = async () => {
         try {
             const response = await fetch("http://localhost:8000/applications/amazon", {
-                headers: {
-                    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
-                }
+                credentials: "include", 
             })
             if (!response.ok) {
                 throw Error

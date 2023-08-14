@@ -18,7 +18,7 @@ export default function UpdateFlowPopUp() {
     if (successAlert) {
       const timer = setTimeout(() => {
         setSuccessAlert(false);
-        refreshPage();
+        // refreshPage();
       }, 4000);
 
       return () => clearTimeout(timer);

@@ -16,7 +16,7 @@
   "applicationScreenFlow": {
     "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
     "applicationName": "SocialBook",
-    "lastUpdatedOn": "05:23:2023:15:27:42",
+    "lastUpdatedOn": "08:14:2023:11:55:14",
     "applicationScreenFlow": [
       {
         "screenName": "Home",
@@ -26,7 +26,7 @@
       {
         "screenName": "Home",
         "portName": "Home.Login",
-        "destinationView": "Login"
+        "destinationView": "RandomPage"
       },
       {
         "screenName": "Home",

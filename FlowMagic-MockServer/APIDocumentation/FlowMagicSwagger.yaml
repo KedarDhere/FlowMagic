@@ -8,7 +8,7 @@ info:
       2. Design an API that allows users to obtain screen flow and change screen flow for the regetered applications.
   contact:
     email: dherek@oregonstate.edu
-  version: 1.0.0
+  version: .0.0
 servers:
   - url: https://www.localserver:8000/flowMagic/
 tags:
@@ -18,68 +18,67 @@ tags:
     description: Applications registered by the user
   - name: screenFlow
     description: Application's screen flow
+
 paths:
-  /user/login:
-    post:
+  /auth:
+    get:
       tags:
         - user
-      summary: Enable user to login to the web portal
-      description: Login to the web portal with the credentials
-      operationId: createUser
-      requestBody:
-        description: User login
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserLogin'
+      summary: Initiate OAuth 2.0 Authorization Code flow with Google
+      description: Redirects user to Google's sign-in page.
+      operationId: initiateOAuthFlow
       responses:
-        '200':
-          description: Login Successful
+        "302":
+          description: Redirect to Google's sign-in page
+        "401":
+          description: Unauthorized or Denied by user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
-        '401':
-          description: Invalid credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FailureResponse'
-        '500':
-          description: Operation Failed. Please try after some time
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FailureResponse'
-          
-  /user/logout:
-    post:
+                $ref: "#/components/schemas/FailureResponse"
+        "500":
+          description: Internal Server Error
+
+  /auth/google/callback:
+    get:
       tags:
         - user
-      summary: Log out current logged in user session
+      summary: Google OAuth 2.0 callback endpoint
+      description: Callback endpoint for Google OAuth 2.0 authentication. This will set the authentication cookie and redirect the user.
+      responses:
+        "302":
+          description: Successfully authenticated. The user is redirected to the dashboard or another appropriate page.
+          headers:
+            Set-Cookie:
+              description: The authentication cookie being set.
+              schema:
+                type: string
+        "401":
+          description: Authentication failed. The user is redirected to the login page with an error message.
+        "500":
+          description: Internal server error. The user is redirected to an error page.
+
+  /logout:
+    get:
+      tags:
+        - user
+      summary: Log out current logged in user session and clear cookies
       description: Logout the current session
       operationId: logoutUser
       responses:
-        '200':
+        "200":
           description: User logged out successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
-        '401':
-          description: Invalid bearer token
+                $ref: "#/components/schemas/SuccessResponse"
+        "401":
+          description: Invalid session or token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
-        '500':
-          description: Operation Failed. Please try after some time
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FailureResponse'
-      security:
-          - bearerAuth: []
+                $ref: "#/components/schemas/FailureResponse"
+
   /applications:
     get:
       tags:
@@ -88,35 +87,35 @@ paths:
       description: Returns a list of applications
       operationId: List out all the applications of the login user
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Applications'    
-        '400':
+                  $ref: "#/components/schemas/Applications"
+        "400":
           description: Invalid application Id
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse' 
-        '401':  
+                $ref: "#/components/schemas/FailureResponse"
+        "401":
           description: Invalid bearer token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
-        '500':
+                $ref: "#/components/schemas/FailureResponse"
+        "500":
           description: Operation Failed. Please try after some time
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
+                $ref: "#/components/schemas/FailureResponse"
       security:
-          - bearerAuth: []
-          
+        - oAuth2: [email]
+
   /applications/{applicationId}/screenFlow:
     get:
       tags:
@@ -124,7 +123,7 @@ paths:
       summary: View Particular application's screen flow
       description: Get the Application's screen flow
       operationId: getScreenFlowByApplicationId
-      parameters:   
+      parameters:
         - name: applicationId
           in: path
           description: Application ID which is uniquely identifies registered application
@@ -135,33 +134,33 @@ paths:
             items:
               type: string
       security:
-          - bearerAuth: []
+        - oAuth2: [email]
       responses:
-        '200':
+        "200":
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ScreenFlow'          
-        '404':
+                $ref: "#/components/schemas/ScreenFlow"
+        "404":
           description: Application not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
-        '401':  
+                $ref: "#/components/schemas/FailureResponse"
+        "401":
           description: Invalid bearer token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
-        '500':
+                $ref: "#/components/schemas/FailureResponse"
+        "500":
           description: Operation Failed. Please try after some time
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
-    
+                $ref: "#/components/schemas/FailureResponse"
+
     put:
       tags:
         - screenFlow
@@ -181,44 +180,42 @@ paths:
         content:
           application/json:
             schema:
-               $ref:  '#/components/schemas/ScreenFlow'
+              $ref: "#/components/schemas/ScreenFlow"
       responses:
-        '200':
+        "200":
           description: Screen flow modified successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
-        '401':  
+                $ref: "#/components/schemas/SuccessResponse"
+        "401":
           description: Invalid bearer token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
-        '500':
+                $ref: "#/components/schemas/FailureResponse"
+        "500":
           description: Operation Failed. Please try after some time
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FailureResponse'
+                $ref: "#/components/schemas/FailureResponse"
       security:
-          - bearerAuth: []    
-              
-  
-          
+        - oAuth2: [email]
+
 components:
   schemas:
     ScreenFlow:
       type: object
       properties:
         applicationId:
-            type: string
-            example: 1234667812345678
+          type: string
+          example: 1234667812345678
         applicationScreenflow:
-            type: array
-            items:
-                  $ref:  '#/components/schemas/Screen'
-                  
+          type: array
+          items:
+            $ref: "#/components/schemas/Screen"
+
     Screen:
       type: object
       properties:
@@ -234,7 +231,7 @@ components:
           type: object
           format: string
           example: Login
-          
+
     Applications:
       type: object
       properties:
@@ -245,50 +242,48 @@ components:
         applicationName:
           type: string
           example: "SocialBook"
-          
-      
+
     UserLogin:
       type: object
       properties:
         username:
           type: string
-          example: userEmailId@gmail.com 
+          example: userEmailId@gmail.com
         password:
           type: string
-          example: '12345'
+          example: "12345"
     LoginResponse:
       type: object
       properties:
-        token: 
+        token:
           type: string
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-    
+
     SuccessResponse:
       type: object
       properties:
-        status: 
+        status:
           type: string
           example: "SUCCESS"
-        meesage: 
+        meesage:
           type: string
           example: Custom message about the operation
-          
+
     FailureResponse:
       type: object
       properties:
-        status: 
+        status:
           type: string
           example: "FAILURE"
-        meesage: 
+        meesage:
           type: string
           example: Error message about the operation
-  securitySchemes:  
-      bearerAuth:
-        type: http
-        scheme: bearer
-        bearerFormat: JWT 
-
-    
-  
-        
-          
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
+      flows:
+        implicit: # <---- OAuth flow(authorizationCode, implicit, password or clientCredentials)
+          authorizationUrl: https://api.example.com/oauth2/authorize
+          scopes:
+            email: User's email address
