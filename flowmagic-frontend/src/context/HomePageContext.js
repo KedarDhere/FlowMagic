@@ -9,18 +9,16 @@ export const ApplicationDetailsProvider = ({ children }) => {
     const [applicationID, setApplicationID] = useState(" ")
     const [applicationName, setApplicationName] = useState(" ")
     const navigate = useNavigate()
-
+    
     useEffect(() => {
         fetchApplication()
     }, [])
 
-    //Fetch all the registered applications
+    // Fetch all the registered applications
     const fetchApplication = async () => {
         try {
-            const response = await fetch("http://localhost:8000/applications/amazon", {
-                headers: {
-                    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
-                }
+            const response = await fetch(process.env.REACT_APP_FETCH_APPLICATIONS, {
+                credentials: "include", 
             })
             if (!response.ok) {
                 throw Error

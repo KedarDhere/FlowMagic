@@ -183,3 +183,18 @@
   }
 
   
+/*Login Screen*/
+.login-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.login-logo {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 30px;
+}

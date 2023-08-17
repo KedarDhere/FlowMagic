@@ -6,17 +6,18 @@ const ScreenFlowContext = createContext()
 
 export const buildEdges = async () => {
     try {
-        const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
-            headers: {
-                authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
-            }
+        const response = await fetch(process.env.REACT_APP_SCREEN_FLOW, {
+            credentials: "include", 
         })
 
         if (!response.ok) {
             throw Error
         }
-            const data = await response.json()
+        const data = await response.json()
+        console.log(data)
+            console.log(data.applicationScreenFlow)
             const srvScreenFlow = data.applicationScreenFlow
+            
             const temp = srvScreenFlow.map(element => {
             return {
                 id: element.portName,
@@ -38,10 +39,8 @@ export const buildEdges = async () => {
 
 export const fetchNodesData = async() => {
     try {
-        const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/nodesInfo`, {
-            headers: {
-                authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
-            }
+        const response = await fetch(process.env.REACT_APP_NODES_INFO, {
+            credentials: "include", 
         })
         if (!response.ok) {
             throw Error
@@ -69,10 +68,8 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const fetchScreenFlow = async () => {
         try {
-        const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
-            headers: {
-                authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
-            }
+            const response = await fetch(process.env.REACT_APP_SCREEN_FLOW, {
+            credentials: "include", 
         })
 
         if (!response.ok) {
@@ -88,10 +85,8 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const fetchScreenInfo = async () => {
         try {
-            const response = await fetch("http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screens", {
-                headers: {
-                    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s'
-                }
+            const response = await fetch(process.env.REACT_APP_SCREENS_INFO, {
+                credentials: "include", 
             })
             if (!response.ok) {
                 throw Error
@@ -115,22 +110,21 @@ export const ScreenFlowContextProvider = ({ children }) => {
             }
         })
         updatedScreenFlow.lastUpdatedOn = format(new Date(), 'MM:dd:yyyy:HH:mm:ss')
+        console.log(updatedScreenFlow)
         return updatedScreenFlow
     }
 
     const updateFlow = async () => {
         try {
-            await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
+            await fetch(process.env.REACT_APP_SCREEN_FLOW, {
                 method: "PUT",
                 body: JSON.stringify(
-                    // "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
                     getUpdatedFlow(),
-
                 ),
                 headers: {
-                    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjc5NzA2NzQ2LCJleHAiOjE3MTEyNDI3NDZ9.BJs3Eiy1e2kaAGhql8R_sEPOxcIaPT0LfNqR4OKR00s',
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: "include", 
             })
             setUpdFlowTimeStamp(format(new Date(), 'MM:dd:yyyy:HH:mm:ss'))
             setSuccessAlert(true)
