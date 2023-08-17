@@ -9,28 +9,6 @@ export const ApplicationDetailsProvider = ({ children }) => {
     const [applicationID, setApplicationID] = useState(" ")
     const [applicationName, setApplicationName] = useState(" ")
     const navigate = useNavigate()
-
-    // const [user, setUser] = useState(null);
-    // const getUser = async () => {
-    // try {
-    //   const url = `http://localhost:8000/auth/login/success`;
-    //   const response = await fetch('http://localhost:8000/login/success', {
-    //     credentials: "include",
-    //    })
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! status: ${response.status}`);
-    //     }
-    //   const jsonResponse = await response.json();
-    //   console.log(jsonResponse)
-    //   setUser(jsonResponse.user._json);
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    // };
-
-    // useEffect(() => {
-    //     getUser();
-    //   }, []);
     
     useEffect(() => {
         fetchApplication()
@@ -39,7 +17,7 @@ export const ApplicationDetailsProvider = ({ children }) => {
     // Fetch all the registered applications
     const fetchApplication = async () => {
         try {
-            const response = await fetch("http://localhost:8000/applications/amazon", {
+            const response = await fetch(process.env.REACT_APP_FETCH_APPLICATIONS, {
                 credentials: "include", 
             })
             if (!response.ok) {

@@ -6,7 +6,7 @@ const ScreenFlowContext = createContext()
 
 export const buildEdges = async () => {
     try {
-        const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
+        const response = await fetch(process.env.REACT_APP_SCREEN_FLOW, {
             credentials: "include", 
         })
 
@@ -39,7 +39,7 @@ export const buildEdges = async () => {
 
 export const fetchNodesData = async() => {
     try {
-        const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/nodesInfo`, {
+        const response = await fetch(process.env.REACT_APP_NODES_INFO, {
             credentials: "include", 
         })
         if (!response.ok) {
@@ -68,7 +68,7 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const fetchScreenFlow = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
+            const response = await fetch(process.env.REACT_APP_SCREEN_FLOW, {
             credentials: "include", 
         })
 
@@ -85,7 +85,7 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const fetchScreenInfo = async () => {
         try {
-            const response = await fetch("http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screens", {
+            const response = await fetch(process.env.REACT_APP_SCREENS_INFO, {
                 credentials: "include", 
             })
             if (!response.ok) {
@@ -116,7 +116,7 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const updateFlow = async () => {
         try {
-            await fetch(`http://localhost:8000/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow`, {
+            await fetch(process.env.REACT_APP_SCREEN_FLOW, {
                 method: "PUT",
                 body: JSON.stringify(
                     getUpdatedFlow(),

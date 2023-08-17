@@ -7,7 +7,7 @@ import App from './App.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 createRoot(document.getElementById('root')).render(
-    <GoogleOAuthProvider clientId='387115768864-j30dm2nqndvvokgnujmrq3l6ge24vode.apps.googleusercontent.com'>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
         <Router>
             <App />
         </Router>
