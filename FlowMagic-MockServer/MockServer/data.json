@@ -14,30 +14,26 @@
     }
   ],
   "applicationScreenFlow": {
-    "mock": {
-      "applicationScreenFlow": {
-        "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
-        "applicationName": "SocialBook",
-        "lastUpdatedOn": "08:16:2023:09:35:49",
-        "applicationScreenFlow": [
-          {
-            "screenName": "Home",
-            "portName": "Home.RandomPage",
-            "destinationView": "RandomPage"
-          },
-          {
-            "screenName": "Home",
-            "portName": "Home.Login",
-            "destinationView": "SignUp"
-          },
-          {
-            "screenName": "Home",
-            "portName": "Home.SignUp",
-            "destinationView": "SignUp"
-          }
-        ]
+    "applicationId": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
+    "applicationName": "SocialBook",
+    "lastUpdatedOn": "08:24:2023:13:00:42",
+    "applicationScreenFlow": [
+      {
+        "screenName": "Home",
+        "portName": "Home.RandomPage",
+        "destinationView": "RandomPage"
+      },
+      {
+        "screenName": "Home",
+        "portName": "Home.Login",
+        "destinationView": "Login"
+      },
+      {
+        "screenName": "Home",
+        "portName": "Home.SignUp",
+        "destinationView": "SignUp"
       }
-    }
+    ]
   },
   "screenInfo": [
     {

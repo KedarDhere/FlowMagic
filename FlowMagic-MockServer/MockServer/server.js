@@ -10,9 +10,7 @@ const fs = require('fs')
 const path = require('path')
 
 const dataFilePath = path.join(__dirname, 'data.json')
-const testDataFilePath = path.join(__dirname, '/__tests__/testData.json')
 const data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'))
-const testData = JSON.parse(fs.readFileSync(testDataFilePath, 'utf8'))
 
 const { Mutex } = require('async-mutex')
 const mutex = new Mutex()
@@ -86,19 +84,6 @@ app.use(cookieSession({
 app.use(passport.initialize())
 app.use(passport.session())
 
-// function checkLoggedIn (req, res, next) {
-//   console.log(req.cookies)
-//   console.log('Current user is:', req.user)
-//   const isLoggedIn = req.isAuthenticated() && req.user
-//   if (!isLoggedIn) {
-//     console.log('Error')
-//     return res.status(401).json({
-//       error: 'You must log in!'
-//     })
-//   }
-//   next()
-// }
-
 app.get('/auth', passport.authenticate('google', {
   scope: ['email']
 }))
@@ -119,22 +104,8 @@ app.get('/login/failed', function (req, res) {
   })
 })
 
-// Checks if user is login
-app.get('/login/success', function (req, res) {
-  if (req.user) {
-    res.status(200).json({
-      error: false,
-      message: 'Successfully Loged In',
-      user: req.user
-    })
-  } else {
-    res.status(403).json({ error: true, message: 'Not Authorized' })
-  }
-})
-
 app.get('/logout', (req, res) => {
   req.logout()
-  console.log('TEst')
   res.status(200).json({ message: 'Logout successful' })
 })
 
@@ -154,7 +125,6 @@ app.get('/applications/:companyName', checkLoggedIn, async function (req, res, n
 })
 
 app.get('/applications/:applicationId/screenFlow', checkLoggedIn, function (req, res, next) {
-  // const authToken = req.headers.authorization
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
   const applicationID = req.params.applicationId
   if (appId === applicationID) {
@@ -180,6 +150,8 @@ app.put('/applications/:applicationId/screenFlow', async function (req, res, nex
   const release = await mutex.acquire()
 
   if (process.env.NODE_ENV === 'test' && appId === applicationID && req.body) {
+    const testDataFilePath = path.join(__dirname, '/__tests__/testData.json')
+    const testData = JSON.parse(fs.readFileSync(testDataFilePath, 'utf8'))
     return res.status(200).send(testData.applicationScreenFlow)
   }
   if (appId === applicationID && req.body) {
@@ -236,10 +208,6 @@ app.get('/applications/:applicationId/screens', checkLoggedIn, function (req, re
 })
 
 app.use('*', function (err, req, res, next) {
-  // res.status(404).send({
-  //     // err: "This URL was not recognized: " + req.originalUrl
-  //     err: err
-  // })
   console.log(err)
   res.status(404).send(err)
 })

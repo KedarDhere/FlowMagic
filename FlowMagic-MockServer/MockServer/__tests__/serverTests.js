@@ -1,4 +1,5 @@
 /* eslint-disable jest/expect-expect */
+const nock = require('nock')
 const request = require('supertest')
 const app = require('../server')
 
@@ -16,6 +17,13 @@ describe('Test GET /applications/:companyName', () => {
       .get('/applications/amazon')
       .expect(401)
   })
+
+  test('It should return with 400 as company name is not registered', async () => {
+    await request(app)
+      .get('/applications/osu')
+      .set('test-auth', 'mock-user')
+      .expect(400)
+  })
 })
 
 describe('Test GET /applications/:applicationId/screenFlow', () => {
@@ -30,6 +38,13 @@ describe('Test GET /applications/:applicationId/screenFlow', () => {
   test('It should return status code 400 if Application Id is incorrect', async () => {
     await request(app)
       .get('/applications/66ceb688-a2b3-11ed-a8fc/screenFlow')
+      .set('test-auth', 'mock-user')
+      .expect(400)
+  })
+
+  test('It should return with 400 as application is not registered', async () => {
+    await request(app)
+      .get('/applications/66ceb688-a2b3-11ed-dfgh/screenFlow')
       .set('test-auth', 'mock-user')
       .expect(400)
   })
@@ -88,6 +103,13 @@ describe('Test GET /applications/:applicationId/nodesInfo', () => {
       .set('test-auth', 'mock-user')
       .expect(400)
   })
+
+  test('It should return with 400 as application is not registered', async () => {
+    await request(app)
+      .get('/applications/66ceb688-a2b3-11ed-dfgh/nodesInfo')
+      .set('test-auth', 'mock-user')
+      .expect(400)
+  })
 })
 
 describe('Test GET /applications/:applicationId/screens', () => {
@@ -104,5 +126,61 @@ describe('Test GET /applications/:applicationId/screens', () => {
       .get('/applications/66ceb688-a2b3-11ed-a8fc/screens')
       .set('test-auth', 'mock-user')
       .expect(400)
+  })
+
+  test('It should return with 400 as application is not registered', async () => {
+    await request(app)
+      .get('/applications/66ceb688-a2b3-11ed-dfgh/screens')
+      .set('test-auth', 'mock-user')
+      .expect(400)
+  })
+})
+
+describe('Google Authentication Callback', () => {
+  beforeEach(() => {
+    // Clean all nocks after each test to ensure a clean slate
+    nock.cleanAll()
+  })
+
+  it('should redirect to CLIENT_URL on successful authentication', async () => {
+    // Mock Google's OAuth response for success
+    const mockedToken = 'mocked_token_123'
+
+    nock('https://www.googleapis.com')
+      .post('/oauth2/v4/token')
+      .reply(200, {
+        access_token: mockedToken,
+        token_type: 'Bearer',
+        expires_in: 3600
+      })
+
+    const response = await request(app).get('/auth/google/callback').send()
+
+    expect(response.status).toBe(302) // Expecting a redirection status code
+    console.log(response.headers)
+    const decodedURL = decodeURIComponent(response.headers.location)
+    console.log(decodedURL)
+  })
+
+  it('should redirect to /login/failed on failed authentication', async () => {
+    // Mock Google's OAuth response for failure
+    nock('https://www.googleapis.com')
+      .post('/oauth2/v4/token')
+      .reply(401, {
+        error: 'invalid_request',
+        error_description: 'Invalid authentication request.'
+      })
+
+    const response = await request(app).get('/auth/google/callback').send()
+
+    expect(response.status).toBe(302) // Expecting a redirection status code
+  })
+})
+
+describe("Test .use('*') path", () => {
+  test('It should return with 404 if route is not registered', async () => {
+    await request(app)
+      .get('/')
+      .expect(404)
   })
 })
