@@ -9,8 +9,8 @@ const { applicationScreenFlow } = require('./data.json')
 const fs = require('fs')
 const path = require('path')
 
-const dataFilePath = path.join(__dirname, 'data.json')
-const data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'))
+let dataFilePath = path.join(__dirname, 'data.json')
+let data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'))
 
 const { Mutex } = require('async-mutex')
 const mutex = new Mutex()
@@ -150,9 +150,11 @@ app.put('/applications/:applicationId/screenFlow', async function (req, res, nex
   const release = await mutex.acquire()
 
   if (process.env.NODE_ENV === 'test' && appId === applicationID && req.body) {
-    const testDataFilePath = path.join(__dirname, '/__tests__/testData.json')
-    const testData = JSON.parse(fs.readFileSync(testDataFilePath, 'utf8'))
-    return res.status(200).send(testData.applicationScreenFlow)
+    if (process.env.NODE_ENV === 'test' && appId === applicationID && req.body) {
+      dataFilePath = path.join(__dirname, '/__tests__/testData.json')
+      data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'))
+    }
+    return res.status(200).send(data.applicationScreenFlow)
   }
   if (appId === applicationID && req.body) {
     // Replace its screen flow data
