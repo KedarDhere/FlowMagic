@@ -80,11 +80,19 @@ describe('Test PUT /applications/:applicationId/screenFlow', () => {
     const response = await request(app)
       .put('/applications/66ceb688-a2b3-11ed-a8fc-0242ac120002/screenFlow')
       .set('test-auth', 'mock-user')
-      .send({ mock: updatedApplicationScreenFlow })
+      .send(updatedApplicationScreenFlow)
       .expect(200)
       .expect('Content-Type', /json/)
+    console.log(response.body)
+    expect(response.body).toEqual(updatedApplicationScreenFlow)
+  })
 
-    expect(response.body).toEqual(updatedApplicationScreenFlow.applicationScreenFlow)
+  test('It should return updated screen flow with status 400', async () => {
+    await request(app)
+      .put('/applications/66ceb688-a2b3-11ed/screenFlow')
+      .set('test-auth', 'mock-user')
+      .send(updatedApplicationScreenFlow)
+      .expect(400)
   })
 })
 

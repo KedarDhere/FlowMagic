@@ -154,9 +154,6 @@ app.put('/applications/:applicationId/screenFlow', async function (req, res, nex
 
   const release = await mutex.acquire()
 
-  if (process.env.NODE_ENV === 'test' && appId === applicationID && req.body) {
-    return res.status(200).send(data.applicationScreenFlow)
-  }
   if (appId === applicationID && req.body) {
     // Replace its screen flow data
     data.applicationScreenFlow = newScreenFlow
