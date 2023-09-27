@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+          cache-dependency-path: ./FlowMagic-MockServer/MockServer/package-lock.json
 
       - run: npm ci
         working-directory: ./FlowMagic-MockServer/MockServer
