@@ -4,6 +4,7 @@
   "description": "Flow Magic Mock Server",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "jest --forceExit",
     "test-watch": "test-watch --runInBand --force-exit --detectOpenHandles",
     "dev": "nodemon server.js",
