@@ -129,7 +129,7 @@ app.get('/applications/:companyName', checkLoggedIn, async function (req, res, n
   }
 })
 
-app.get('/applications/:applicationId/screenFlow', checkLoggedIn, function (req, res, next) {
+app.get('/applications/:applicationId/screenFlow', function (req, res, next) {
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
   const applicationID = req.params.applicationId
   if (appId === applicationID) {
@@ -142,7 +142,7 @@ app.get('/applications/:applicationId/screenFlow', checkLoggedIn, function (req,
   }
 })
 
-app.put('/applications/:applicationId/screenFlow', async function (req, res, next) {
+app.put('/applications/:applicationId/screenFlow', checkLoggedIn, async function (req, res, next) {
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
   const applicationID = req.params.applicationId
   const newScreenFlow = req.body

@@ -63,14 +63,14 @@ function Header() {
   const handleShow = () => setShow(true);
 
   return (
-      <div id='header-container'>
+    <div id='header-container'>
+      <Image src={process.env.PUBLIC_URL + '/FlowMagic.png'} alt="Flow Magic Logo" />
       <div id="user-action">
         <div className="logout">
             <CircleIcon letter="A"  OnClick={handleShow}/>
         </div>
         <h3 className='company-title'>{ companyName[0].toUpperCase() + companyName.slice(1) }</h3>
       </div>
-      <Image src={process.env.PUBLIC_URL + '/FlowMagic.png'} alt="Flow Magic Logo" />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Logout</Modal.Title>
