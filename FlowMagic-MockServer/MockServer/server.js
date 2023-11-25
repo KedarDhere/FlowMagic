@@ -114,8 +114,8 @@ app.get('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' })
 })
 
-app.get('/applications/:companyName', checkLoggedIn, async function (req, res, next) {
-  const companyName = req.params.companyName
+app.get('/applications', checkLoggedIn, async function (req, res, next) {
+  const companyName = req.query.companyName
   if (companyName.toLowerCase() === 'silab') {
     res.status(200).send({
       companyName,
