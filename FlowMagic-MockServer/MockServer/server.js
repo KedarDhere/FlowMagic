@@ -116,7 +116,7 @@ app.get('/logout', (req, res) => {
 
 app.get('/applications/:companyName', checkLoggedIn, async function (req, res, next) {
   const companyName = req.params.companyName
-  if (companyName.toLowerCase() === 'amazon') {
+  if (companyName.toLowerCase() === 'silab') {
     res.status(200).send({
       companyName,
       applications: applicationsData
@@ -129,9 +129,9 @@ app.get('/applications/:companyName', checkLoggedIn, async function (req, res, n
   }
 })
 
-app.get('/applications/:applicationId/screenFlow', function (req, res, next) {
+app.get('/applications/:id/screenFlow', function (req, res, next) {
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
-  const applicationID = req.params.applicationId
+  const applicationID = req.params.id
   if (appId === applicationID) {
     res.status(200).send(applicationScreenFlow)
   } else {
@@ -142,13 +142,13 @@ app.get('/applications/:applicationId/screenFlow', function (req, res, next) {
   }
 })
 
-app.put('/applications/:applicationId/screenFlow', checkLoggedIn, async function (req, res, next) {
+app.put('/applications/:id/screenFlow', checkLoggedIn, async function (req, res, next) {
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
-  const applicationID = req.params.applicationId
+  const applicationID = req.params.id
   const newScreenFlow = req.body
   // console.log('Test')
   console.log(req.url)
-  console.log('applicationId: ', applicationID)
+  console.log('id: ', applicationID)
   console.log('appId: ', appId)
   console.log(req.body)
 
@@ -173,9 +173,9 @@ app.put('/applications/:applicationId/screenFlow', checkLoggedIn, async function
 })
 
 // Adding the following endpoint to retrieve the nodes' information
-app.get('/applications/:applicationId/nodesInfo', checkLoggedIn, function (req, res, next) {
+app.get('/applications/:id/nodesInfo', checkLoggedIn, function (req, res, next) {
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
-  const applicationID = req.params.applicationId
+  const applicationID = req.params.id
   console.log(nodesInfo)
   if (appId === applicationID) {
     res.status(200).send(nodesInfo)
@@ -188,9 +188,9 @@ app.get('/applications/:applicationId/nodesInfo', checkLoggedIn, function (req, 
 })
 
 // Adding following endpoint as Front End will require All the screens information
-app.get('/applications/:applicationId/screens', checkLoggedIn, function (req, res, next) {
+app.get('/applications/:id/screens', checkLoggedIn, function (req, res, next) {
   const appId = '66ceb688-a2b3-11ed-a8fc-0242ac120002'
-  const applicationID = req.params.applicationId
+  const applicationID = req.params.id
   if (appId === applicationID) {
     res.status(200).send([
       { screenName: 'Home', portNames: ['SignUp', 'Login', 'RandomPage'], view: 'Home' },
