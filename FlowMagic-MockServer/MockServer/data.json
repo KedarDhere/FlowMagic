@@ -16,7 +16,7 @@
   "applicationScreenFlow": {
     "id": "66ceb688-a2b3-11ed-a8fc-0242ac120002",
     "applicationName": "Shopping Application",
-    "lastUpdatedOn": "11:25:2023:11:50:37",
+    "lastUpdatedOn": "11:25:2023:12:10:59",
     "screenFlow": [
       {
         "screenName": "Home",
@@ -31,7 +31,7 @@
       {
         "screenName": "Home",
         "portName": "Home.ForgotPassword",
-        "destinationView": "ForgotPassword"
+        "destinationView": "ForgotPasswordPhone"
       }
     ]
   },

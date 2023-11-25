@@ -3,10 +3,10 @@ const nock = require('nock')
 const request = require('supertest')
 const app = require('../server')
 
-describe('Test GET /applications/:companyName', () => {
+describe('Test GET /applications', () => {
   test('It should return all the registered applications', async () => {
     await request(app)
-      .get('/applications/amazon')
+      .get('/applications/?companyName=silab')
       .set('test-auth', 'mock-user')
       .expect(200)
       .expect('Content-Type', /json/)
@@ -14,13 +14,13 @@ describe('Test GET /applications/:companyName', () => {
 
   test('It should return with 401 as user is not logged in', async () => {
     await request(app)
-      .get('/applications/amazon')
+      .get('/applications')
       .expect(401)
   })
 
   test('It should return with 400 as company name is not registered', async () => {
     await request(app)
-      .get('/applications/osu')
+      .get('/applications/?companyName=osu')
       .set('test-auth', 'mock-user')
       .expect(400)
   })
