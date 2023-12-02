@@ -15,8 +15,8 @@ export const buildEdges = async () => {
         }
         const data = await response.json()
         console.log(data)
-            console.log(data.applicationScreenFlow)
-            const srvScreenFlow = data.applicationScreenFlow
+            console.log(data.screenFlow)
+            const srvScreenFlow = data.screenFlow
             
             const temp = srvScreenFlow.map(element => {
             return {
@@ -101,9 +101,9 @@ export const ScreenFlowContextProvider = ({ children }) => {
 
     const getUpdatedFlow = () => {
         const updatedScreenFlow = applicationScreenFlow
-
+        console.log(updatedScreenFlow)
         //Change the ScreenFlow on the basis of edges and sourceHandle(portName)
-        updatedScreenFlow.applicationScreenFlow.forEach((screenPort) => {
+        updatedScreenFlow.screenFlow.forEach((screenPort) => {
             const temp = updatedEdges.filter((flow) => flow.sourceHandle === screenPort.portName)
             if (temp.length > 0 && temp[0].sourceHandle === screenPort.portName) {
                 screenPort.destinationView = temp[0].target

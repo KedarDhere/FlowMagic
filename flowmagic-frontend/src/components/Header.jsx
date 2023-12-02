@@ -67,9 +67,9 @@ function Header() {
       <Image src={process.env.PUBLIC_URL + '/FlowMagic.png'} alt="Flow Magic Logo" />
       <div id="user-action">
         <div className="logout">
-            <CircleIcon letter="A"  OnClick={handleShow}/>
+            <CircleIcon letter="S"  OnClick={handleShow}/>
         </div>
-        <h3 className='company-title'>{ companyName[0].toUpperCase() + companyName.slice(1) }</h3>
+        <h3 className='company-title'>{ "SI Lab" }</h3>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

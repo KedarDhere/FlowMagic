@@ -86,6 +86,16 @@ paths:
       summary: List all the applications of the user
       description: Returns a list of applications
       operationId: List out all the applications of the login user
+      parameters:
+        - name: companyName
+          in: query
+          description: The name of the company for which the user is attempting to log in.
+          required: true
+          explode: true
+          schema:
+            type: string
+            items:
+              type: string
       responses:
         "200":
           description: successful operation
@@ -116,7 +126,7 @@ paths:
       security:
         - oAuth2: [email]
 
-  /applications/{applicationId}/screenFlow:
+  /applications/{id}/screenFlow:
     get:
       tags:
         - screenFlow
@@ -124,7 +134,7 @@ paths:
       description: Get the Application's screen flow
       operationId: getScreenFlowByApplicationId
       parameters:
-        - name: applicationId
+        - name: id
           in: path
           description: Application ID which is uniquely identifies registered application
           required: true
@@ -168,7 +178,7 @@ paths:
       description: Modify the screen flow of selected application
       operationId: modifyScreenFlowByApplicationId
       parameters:
-        - name: applicationId
+        - name: id
           in: path
           description: Application ID which is uniquely identifies registered application
           required: true
@@ -208,10 +218,10 @@ components:
     ScreenFlow:
       type: object
       properties:
-        applicationId:
+        id:
           type: string
           example: 1234667812345678
-        applicationScreenflow:
+        screenFlow:
           type: array
           items:
             $ref: "#/components/schemas/Screen"
@@ -235,7 +245,7 @@ components:
     Applications:
       type: object
       properties:
-        applicationId:
+        id:
           type: integer
           format: UUID
           example: 66ceb688-a2b3-11ed-a8fc-0242ac120002

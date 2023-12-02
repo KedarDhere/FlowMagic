@@ -13,7 +13,7 @@ function App() {
                 <Routes>
                     <Route exact path="/" element={<Navigate replace to ="/auth"/>}></Route>
                     <Route exact path ="/auth" element={<Login />}></Route>
-                    <Route exact path="/applications/:companyName" element={<Home />}></Route>
+                    <Route exact path="/applications" element={<Home />}></Route>
                     <Route exact path="/application/*" element={<AppScreenFlow/>}></Route>
                 </Routes>
                 </ScreenFlowContextProvider>

@@ -11,7 +11,7 @@ function ButtonList() {
     <>
           {
               applications.map((application,index) => (
-                  <ApplicatonNames key={application.applicationId } name={application.applicationName} className="btn btn-primary"></ApplicatonNames>
+                  <ApplicatonNames key={application.id } name={application.applicationName} className="btn btn-primary"></ApplicatonNames>
               ))
           }
       </>
