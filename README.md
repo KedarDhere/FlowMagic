@@ -1,6 +1,6 @@
 # Flow Magic
 
-Flow Magic is a cutting-edge open-source solution under active development as part of the Software Innovation Track at Oregon State University ([SI Lab](https://research.engr.oregonstate.edu/si-lab/)). It streamlines screen flow management for iOS developers, enabling the modification of the screen flow of apps via an intuitive web portal without any code changes.
+Flow Magic is a cutting-edge open-source solution developed as part of the Software Innovation Track at Oregon State University ([SI Lab](https://research.engr.oregonstate.edu/si-lab/)). It streamlines screen flow management for iOS developers, enabling the modification of the screen flow of apps via an intuitive web portal without any code changes.
 
 ## Getting Started
 
